@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AvailabilityService } from '../services/availability.service';
 
 @Component({
@@ -7,25 +7,25 @@ import { AvailabilityService } from '../services/availability.service';
   templateUrl: './availability-check.component.html',
   styleUrls: ['./availability-check.component.scss'],
 })
-export class AvailabilityCheckComponent implements OnInit {
-  @Input() date$: Subject<Date> = new Subject<Date>();
-  @Input() time$: Subject<Date> = new Subject<Date>();
+export class AvailabilityCheckComponent {
+  @Input() date: Date | null = new Date();
+  @Input() time: string | null = '';
 
-  constructor(private _availabilityService: AvailabilityService) {}
+  constructor(
+    private _availabilityService: AvailabilityService,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit(): void {}
-
-  onCheckAvailability() {
-    console.log('availability checked');
-
+  onCheckAvailability(date: Date | null, time: string | null) {
+    const datetime = date?.toISOString().split('T')[0] + 'T' + time;
     return this._availabilityService
-      .checkAvailability()
-      .subscribe((isAvailable) => this.showPopup(isAvailable));
+      .checkAvailability(datetime)
+      .subscribe((isAvailable) => this.showPopup(isAvailable.available));
   }
 
   showPopup(isAvailable: boolean) {
     isAvailable
-      ? console.log('This resource is available')
-      : console.error('This resource is not available');
+      ? this._snackBar.open('This resource is available')
+      : this._snackBar.open('This resource is not available');
   }
 }

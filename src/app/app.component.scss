@@ -1,0 +1,20 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .datetime-picker {
+    display: flex;
+    gap: 1em;
+  }
+
+  .availability-check {
+    display: flex;
+  }
+
+  .availability-response {
+    display: flex;
+  }
+}

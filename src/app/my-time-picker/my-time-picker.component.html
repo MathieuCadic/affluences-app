@@ -1,1 +1,8 @@
-<input type="time" (change)="time.emit()">
+<mat-form-field appearance="fill">
+  <mat-label>Time</mat-label>
+  <mat-select (valueChange)="time.emit($event)">
+    <mat-option *ngFor="let time of timeList" [value]="time.timeValue">{{
+      time.timeDisplay
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>

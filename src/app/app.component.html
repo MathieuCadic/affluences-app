@@ -1,3 +1,12 @@
-<app-my-date-picker (date)="date$.next($event)"></app-my-date-picker>
-<app-my-time-picker (time)="time$.next($event)"></app-my-time-picker>
-<app-availability-check [date$]="date$" [time$]="time$"></app-availability-check>
+<div class="app">
+  <div class="datetime-picker">
+    <app-my-date-picker (date)="date$.next($event)"></app-my-date-picker>
+    <app-my-time-picker (time)="time$.next($event)"></app-my-time-picker>
+  </div>
+  <div class="availability-check">
+    <app-availability-check
+      [date]="date$ | async"
+      [time]="time$ | async"
+    ></app-availability-check>
+  </div>
+</div>
